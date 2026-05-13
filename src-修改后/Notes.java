@@ -1,0 +1,6 @@
+// In Notes.java
+// ... 
+public static final int ID_TRASH_FOLDER = -3; // Fixed typo: FOLER -> FOLDER
+// If the database is already using 'ID_TRASH_FOLER', you must keep the old name
+// or handle the migration in the DatabaseHelper.
+// ...
