@@ -1,0 +1,6 @@
+net.micode.notes.test.app-jetified-core-1.5.0-0 C:\Users\26363\.gradle\caches\8.10.2\transforms\35f04dde76849278f1713855e0ac01dc\transformed\jetified-core-1.5.0\res
+net.micode.notes.test.app-jetified-annotation-experimental-1.3.0-1 C:\Users\26363\.gradle\caches\8.10.2\transforms\b487378e32ee39728184f09d7b460bf3\transformed\jetified-annotation-experimental-1.3.0\res
+net.micode.notes.test.app-androidTest-2 D:\trae_1\mi notes\app\build\generated\res\resValues\androidTest\debug
+net.micode.notes.test.app-mergeDebugAndroidTestResources-3 D:\trae_1\mi notes\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+net.micode.notes.test.app-mergeDebugAndroidTestResources-4 D:\trae_1\mi notes\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+net.micode.notes.test.app-debugAndroidTest-5 D:\trae_1\mi notes\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources

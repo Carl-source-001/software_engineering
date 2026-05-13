@@ -1,0 +1,31 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        // 替换 jcenter()（已废弃）为 mavenCentral()
+        mavenCentral()
+    }
+    dependencies {
+        // 核心修改：升级 AGP 版本至与 Gradle 8.10.2 兼容的 8.4.0
+        classpath 'com.android.tools.build:gradle:8.4.0'
+
+        // 新增：添加 Kotlin 插件（AGP 8.x 推荐配套 Kotlin 1.9.20+）
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.20"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        // 替换 jcenter()（已废弃）为 mavenCentral()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
