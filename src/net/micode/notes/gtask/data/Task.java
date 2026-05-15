@@ -54,29 +54,40 @@ public class Task extends Node {
         mMetaInfo = null;
     }
 
+    // getCreateAction 函数，作用是构建一个 JSONObject ，包含 create 的信息 ？
     public JSONObject getCreateAction(int actionId) {
         JSONObject js = new JSONObject();
 
         try {
             // action_type
+            // 加入键值对 <"action_type","create">
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_TYPE,
                     GTaskStringUtils.GTASK_JSON_ACTION_TYPE_CREATE);
 
             // action_id
+            // 加入键值对 <"action_id",actionId>
             js.put(GTaskStringUtils.GTASK_JSON_ACTION_ID, actionId);
 
             // index
+            // 加入键值对 <"index",index>
             js.put(GTaskStringUtils.GTASK_JSON_INDEX, mParent.getChildTaskIndex(this));
 
-            // entity_delta
+            // entity_delta 实体变更
             JSONObject entity = new JSONObject();
+            // name
             entity.put(GTaskStringUtils.GTASK_JSON_NAME, getName());
+            // creator_id
             entity.put(GTaskStringUtils.GTASK_JSON_CREATOR_ID, "null");
+            // <"entity_type","Task">
+            // 即实体类型
             entity.put(GTaskStringUtils.GTASK_JSON_ENTITY_TYPE,
                     GTaskStringUtils.GTASK_JSON_TYPE_TASK);
+
             if (getNotes() != null) {
+                // "notes"
                 entity.put(GTaskStringUtils.GTASK_JSON_NOTES, getNotes());
             }
+            // 实体变更
             js.put(GTaskStringUtils.GTASK_JSON_ENTITY_DELTA, entity);
 
             // parent_id
@@ -89,7 +100,7 @@ public class Task extends Node {
             // list_id
             js.put(GTaskStringUtils.GTASK_JSON_LIST_ID, mParent.getGid());
 
-            // prior_sibling_id
+            // prior_sibling_id 上一个同级节点的 ID
             if (mPriorSibling != null) {
                 js.put(GTaskStringUtils.GTASK_JSON_PRIOR_SIBLING_ID, mPriorSibling.getGid());
             }
@@ -123,6 +134,7 @@ public class Task extends Node {
             if (getNotes() != null) {
                 entity.put(GTaskStringUtils.GTASK_JSON_NOTES, getNotes());
             }
+            // deleted
             entity.put(GTaskStringUtils.GTASK_JSON_DELETED, getDeleted());
             js.put(GTaskStringUtils.GTASK_JSON_ENTITY_DELTA, entity);
 
@@ -134,6 +146,8 @@ public class Task extends Node {
 
         return js;
     }
+
+    // 远程 JSON，解析云端下发的 JSON 数据，更新本地 Task 对象状态
 
     public void setContentByRemoteJSON(JSONObject js) {
         if (js != null) {
@@ -175,6 +189,10 @@ public class Task extends Node {
         }
     }
 
+    // 本地 JSON ，与下面的 getLocalJSONFromContent 函数一起实现本地便签数据与云端元数据的双向转换
+    // 将本地便签的 JSON 数据解析并填充到当前的 Task 对象中
+    // 主要在应用需要将本地数据上传到云端（或进行本地化处理）时被调用
+
     public void setContentByLocalJSON(JSONObject js) {
         if (js == null || !js.has(GTaskStringUtils.META_HEAD_NOTE)
                 || !js.has(GTaskStringUtils.META_HEAD_DATA)) {
@@ -185,10 +203,14 @@ public class Task extends Node {
             JSONObject note = js.getJSONObject(GTaskStringUtils.META_HEAD_NOTE);
             JSONArray dataArray = js.getJSONArray(GTaskStringUtils.META_HEAD_DATA);
 
+            // NoteColumns 是笔记数据表列名常量接口
+
             if (note.getInt(NoteColumns.TYPE) != Notes.TYPE_NOTE) {
                 Log.e(TAG, "invalid type");
                 return;
             }
+
+            // 判断当前这条数据是不是 “笔记类型”，如果是，就把笔记内容设置进去。
 
             for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject data = dataArray.getJSONObject(i);
@@ -204,6 +226,9 @@ public class Task extends Node {
         }
     }
 
+    // 将当前云端 Task 对象中的数据，打包成小米便签本地数据库所需的 JSON 格式
+    // 它主要用于在数据同步完成后，将从云端拉取到的任务数据，转换成小米便签本地数据库能够识别和存储的结构
+
     public JSONObject getLocalJSONFromContent() {
         String name = getName();
         try {
@@ -213,7 +238,7 @@ public class Task extends Node {
                     Log.w(TAG, "the note seems to be an empty one");
                     return null;
                 }
-
+                //这里构造了上面函数用的META_HEAD_DATA，META_HEAD_NOTE（？）
                 JSONObject js = new JSONObject();
                 JSONObject note = new JSONObject();
                 JSONArray dataArray = new JSONArray();

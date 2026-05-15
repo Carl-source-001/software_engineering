@@ -20,6 +20,7 @@ import android.database.Cursor;
 
 import org.json.JSONObject;
 
+// 定义了一些变量，方法
 public abstract class Node {
     public static final int SYNC_ACTION_NONE = 0;
 
